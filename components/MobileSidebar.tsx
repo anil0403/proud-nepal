@@ -8,6 +8,7 @@ import { NavItem } from "@/types/nav"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 
+// import useSidebarStore from "@/hooks/useSidebar"
 import useSidebarStore from "@/hooks/useSidebar"
 
 interface MainNavProps {
