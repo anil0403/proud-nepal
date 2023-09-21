@@ -25,7 +25,7 @@ export function MainNav({ items }: MainNavProps) {
                     key={index}
                     href={item.href}
                     className={cn(
-                      "flex items-center  font-medium text-muted-foreground hover:underline ease-in-out",
+                      "flex items-center  font-medium text-accent-foreground hover:underline ease-in-out"
                     )}
                   >
                     {item.title}
@@ -33,7 +33,6 @@ export function MainNav({ items }: MainNavProps) {
                 )
             )}
           </nav>
-          {/* mobile menu */}
         </>
       ) : null}
     </div>

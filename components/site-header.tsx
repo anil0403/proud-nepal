@@ -4,8 +4,9 @@ import { siteConfig } from "@/config/site"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import MenuToggle from "./MenuToggle"
-import MobileSidebar from "./MobileSidebar"
+import MenuToggle from "./MobileMenu/MenuToggle"
+// import MobileSidebar from "./MobileSidebar"
+import MobileSidebar from "./MobileMenu/MobileSidebar"
 import { Button } from "./ui/button"
 
 export function SiteHeader() {
@@ -45,11 +46,11 @@ export function SiteHeader() {
                 <span className="sr-only">Twitter</span>
               </div>
             </Link> */}
-            <div className="flex flex-row gap-2 md:gap-5 items-center ">
+            <div className="flex flex-row gap-5 justify-end items-center ">
               <ShoppingCart className="hover:cursor-pointer" size={25} />
               <ThemeToggle />
               <MenuToggle />
-              <Button>
+              <Button variant="outline">
                 Login
               </Button>
             </div>

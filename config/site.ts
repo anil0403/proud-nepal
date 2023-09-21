@@ -14,11 +14,11 @@ export const siteConfig = {
       href: "/browse",
     },
     {
-      title: "About",
+      title: "About Us",
       href: "/about",
     },
     {
-      title: "Contact",
+      title: "Contact Us",
       href: "/contact",
     },
   ],
