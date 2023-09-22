@@ -9,7 +9,7 @@ const SiteFooter = () => {
         <div className="my-2 ">
           <h2 className="font-bold py-2 border-b">About Us</h2>
           <div className="py-2 my-2 flex  flex-col gap-1">
-            <Link href="/">
+            <Link rel="noreferrer" href="/">
               <p>Proud Nepal It Suppliers</p>
             </Link>
             <p>Putalisadak, Dhobidhara Marg, Kathmandu, Nepal</p>

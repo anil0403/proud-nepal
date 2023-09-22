@@ -38,6 +38,7 @@ const MobileSidebar = ({ items }: MainNavProps) => {
                     onClick={() => closeSidebar()}
                     key={index}
                     href={item.href}
+                    rel="noreferrer"
                     className={cn("flex items-center  font-medium text-white")}
                   >
                     {item.title}

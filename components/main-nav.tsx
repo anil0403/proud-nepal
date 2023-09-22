@@ -24,6 +24,7 @@ export function MainNav({ items }: MainNavProps) {
                   <Link
                     key={index}
                     href={item.href}
+                    rel="noreferrer"
                     className={cn(
                       "flex items-center  font-medium text-accent-foreground hover:underline ease-in-out"
                     )}
