@@ -53,7 +53,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                   <img
                     src={img.url}
                     alt={`Product Thumbnail ${index + 1}`}
-                    className="w-full h-36 aspect-auto object-cover object-center rounded-lg shadow-md transform transition-transform hover:shadow-lg hover:scale-105 cursor-pointer"
+                    className="w-full h-36 aspect-auto object-cover object-center rounded-lg shadow-md  transition-transform hover:shadow-lg hover:scale-105 cursor-pointer"
                     onClick={() => setMainImage(img.url)}
                   />
                 </div>
