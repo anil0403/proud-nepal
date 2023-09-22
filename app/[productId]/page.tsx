@@ -17,6 +17,8 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
   const [quantity, setQuantity] = useState(1)
   const [mainImage, setMainImage] = useState(product?.images?.[0]?.url || "")
   const [similarity, Setsimilarity] = useState("")
+  const mainImageUrl = product?.images?.[0]?.url
+  
   useEffect(() => {
     Setsimilarity(
       product?.isOffice
@@ -28,7 +30,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
         : ""
     )
     setMainImage(product?.images?.[0]?.url)
-  }, [product?.images?.[0]?.url, product])
+  }, [mainImageUrl, product])
   console.log("Similarity  = ", similarity)
   return (
     <div className="relative flex flex-col justify-center my-10">
