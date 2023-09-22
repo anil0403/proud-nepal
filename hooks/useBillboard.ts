@@ -2,8 +2,9 @@ import useSWR from "swr"
 
 import fetcher from "@/lib/fetcher"
 
-const useCurrentUser = () => {
-  const { data, error, isLoading, mutate } = useSWR("/api/billboard", fetcher)
+const useBillboards = () => {
+  const { data, error, mutate } = useSWR("/api/billboard", fetcher)
+  const isLoading = !data && !error;
   return {
     data,
     error,
@@ -11,4 +12,4 @@ const useCurrentUser = () => {
     mutate,
   }
 }
-export default useCurrentUser
+export default useBillboards

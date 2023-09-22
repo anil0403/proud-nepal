@@ -2,11 +2,11 @@ import useSWR from "swr"
 
 import fetcher from "@/lib/fetcher"
 
-const useCurrentUser = (productId: number) => {
-  const { data, error, isLoading, mutate } = useSWR(
-    `/api/product/${productId}`,
-    fetcher
-  )
+const useProductId = (productId: string) => {
+  const { data, error, mutate } = useSWR(`/api/product/${productId}`, fetcher)
+
+  const isLoading = !data && !error
+
   return {
     data,
     error,
@@ -14,4 +14,5 @@ const useCurrentUser = (productId: number) => {
     mutate,
   }
 }
-export default useCurrentUser
+
+export default useProductId

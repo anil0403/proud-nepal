@@ -4,8 +4,8 @@ import { Facebook, Instagram, Music2, Youtube } from "lucide-react"
 
 const SiteFooter = () => {
   return (
-    <footer className="bg-background sticky top-0 z-40 w-full my-2">
-      <div className="grid grid-cols-3 gap-5 border-y">
+    <footer className="bg-background  bottom-0 z-10 w-full my-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 border-y">
         <div className="my-2 ">
           <h2 className="font-bold py-2 border-b">About Us</h2>
           <div className="py-2 my-2 flex  flex-col gap-1">
