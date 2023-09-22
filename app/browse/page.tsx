@@ -137,7 +137,7 @@ const Browse: React.FC = () => {
           <select
             name="processor"
             onChange={(e: any) => setProcessor(e.target.value)}
-            className="form-select transition-colors block w-full py-2 rounded-lg px-2 hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-select transition-colors block w-full p-4 rounded-lg  hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option value="" selected hidden disabled>
               Select Processor
@@ -155,7 +155,7 @@ const Browse: React.FC = () => {
           <select
             name="ram"
             onChange={(e: any) => setRAM(e.target.value)}
-            className="form-select block w-full py-2 rounded-lg px-2 transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-select block w-full p-2 rounded-lg transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option value="" selected hidden disabled>
               Select RAM
@@ -172,7 +172,7 @@ const Browse: React.FC = () => {
           <select
             name="graphics"
             onChange={(e: any) => setGraphics(e.target.value)}
-            className="form-select block w-full py-2 rounded-lg px-2 transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-select block w-full p-2 rounded-lg transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option value="" selected hidden disabled>
               Select Graphics
@@ -189,7 +189,7 @@ const Browse: React.FC = () => {
           <select
             name="display"
             onChange={(e: any) => setDisplay(e.target.value)}
-            className="form-select block w-full py-2 rounded-lg px-2 transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-select block w-full p-2 rounded-lg transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option value="" selected hidden disabled>
               Select Display
