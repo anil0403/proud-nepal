@@ -145,7 +145,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
               id="quantity"
               value={quantity}
               onChange={(e: any) => setQuantity(e.target.value)}
-              className="border rounded-lg p-2 mr-6 w-24 text-center transition-shadow focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+              className="border rounded-lg p-2 mr-6 w-24 text-center transition-shadow focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:ring-opacity/50"
             />
             {/* <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transform transition-transform hover:scale-105 shadow-md hover:shadow-lg">
               {alert}

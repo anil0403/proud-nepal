@@ -203,7 +203,7 @@ const Browse: React.FC = () => {
           </select>
 
           {/* Price Range */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-5 w-full items-center col-span-full  border-2 bordder-white py-4 px-4 rounded-lg">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-5 w-full items-center col-span-full  border-2 bordder-white p-4 rounded-lg">
             <label htmlFor="price" className="text-white text-lg">
               Price Range:
             </label>

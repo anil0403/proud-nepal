@@ -9,7 +9,7 @@ const About: React.FC = () => {
       <div className="w-full my-10">
         <section className="bg-gray-900 text-white py-12">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-8 transform transition-transform hover:scale-105">
+            <h2 className="text-3xl font-bold mb-8 transition-transform hover:scale-105">
               About Us
             </h2>
             <p className="text-lg mb-6 transition-opacity hover:opacity-80">
@@ -40,6 +40,7 @@ const About: React.FC = () => {
                         <a
                           href="https://www.facebook.com/proudnepalitsuppliers"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           {" "}
                           <Facebook />
@@ -50,6 +51,7 @@ const About: React.FC = () => {
                         <a
                           href="https://www.instagram.com/proudnepalit/"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           {" "}
                           <Instagram />
@@ -59,6 +61,7 @@ const About: React.FC = () => {
                         <a
                           href="https://www.tiktok.com/@shyamlalregmi5"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           <Music2 />{" "}
                         </a>
@@ -68,6 +71,7 @@ const About: React.FC = () => {
                         <a
                           href="https://www.youtube.com/@proudnepalitsupplierspvtltd"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           <Youtube />{" "}
                         </a>
