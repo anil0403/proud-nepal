@@ -1,26 +1,35 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
+
 import useProductId from "@/hooks/useProductId"
 import useProducts from "@/hooks/useProducts"
 import { Button } from "@/components/ui/button"
+import ProductCard from "@/components/ProductCard/ProductCard"
 
 interface ProductIdProps {
   params: { productId: string }
 }
 const ProductId = ({ params: { productId } }: ProductIdProps) => {
   const { data: product } = useProductId(productId)
-  const [alert, setAlert] = useState("")
-
-
+  const { data: products } = useProducts()
+  const [alert, setAlert] = useState("Add to Cart")
   const [quantity, setQuantity] = useState(1)
-  const [mainImage, setMainImage] = useState("")
-
+  const [mainImage, setMainImage] = useState(product?.images?.[0]?.url || "")
+  const [similarity, Setsimilarity] = useState("")
   useEffect(() => {
-    setAlert("Add to Cart")
-    setMainImage(product?.images?.[0]?.url || "")
-  }, [product?.images?.[0]?.url])
-
+    Setsimilarity(
+      product?.isOffice
+        ? "isOffice"
+        : product?.isGaming
+        ? "isGaming"
+        : product?.isStudent
+        ? "isStudent"
+        : ""
+    )
+    setMainImage(product?.images?.[0]?.url)
+  }, [product?.images?.[0]?.url, product])
+  console.log("Similarity  = ", similarity)
   return (
     <div className="relative flex flex-col justify-center my-10">
       {/* Product Display */}
@@ -139,8 +148,8 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
             {/* <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transform transition-transform hover:scale-105 shadow-md hover:shadow-lg">
               {alert}
             </button> */}
-            <Button size="lg">
-              Add to cart
+            <Button onClick={() => setAlert("Added")} size="lg">
+              {alert}
             </Button>
           </div>
           <h1 className="text-center text-xl font-bold bg-yellow-500 text-white my-10 py-4">
@@ -153,6 +162,13 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
       <div className="my-12 p-5">
         <h2 className="text-3xl font-bold mb-6 text-gray-800">
           Similar Products
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
+            {products?.map((item: any) =>
+              item?.isArchived ? null : similarity ? (
+                <ProductCard key={item?.id} product={item} />
+              ) : null
+            )}
+          </div>
         </h2>
       </div>
     </div>

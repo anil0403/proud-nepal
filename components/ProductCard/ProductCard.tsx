@@ -1,4 +1,5 @@
 import React from "react"
+import { Pridi } from "next/font/google"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -22,7 +23,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2 onClick={() => router.push(`${product?.id}`)} >{product.name}</h2>{" "}
+          <h2 onClick={() => router.push(`${product?.id}`)}>{product.name}</h2>{" "}
         </CardTitle>
         {/* <CardDescription>Card Description</CardDescription> */}
       </CardHeader>
@@ -37,20 +38,40 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </CardContent>
       <CardFooter>
         <div className=" w-full flex flex-col gap-5 border-t-2 pt-4">
-          <p className="bg-yellow-400 px-4  py-1 max-w-fit rounded-lg">
+          <div>
+            <p>
+              {" "}
+              {product?.size.name} | {product?.ram.value} {product?.ram.name} |{" "}
+              {product?.color.name} {product?.color.value}{" "}
+            </p>
+          </div>
+          {/* <p className="bg-gradient-to-r from-red-400 to-red-800 text-white px-4 text-sm  py-2 max-w-fit rounded-lg">
             - Rs{" "}
             {new Intl.NumberFormat("en-IN", {
               maximumSignificantDigits: 3,
             }).format(product?.discount || 0)}{" "}
             Off
-          </p>
+          </p> */}
           <div className="flex flex-col gap-1">
-            <p className="text-sm line-through text-red-700">
-              Rs{" "}
-              {new Intl.NumberFormat("en-IN", {
-                maximumSignificantDigits: 3,
-              }).format(product?.price || 0)}
-            </p>
+            {product?.discount && (
+              <>
+                <p className="font-semibold">
+                  {" "}
+                  - Rs{" "}
+                  {new Intl.NumberFormat("en-IN", {
+                    maximumSignificantDigits: 3,
+                  }).format(product?.discount || 0)}{" "}
+                  OFF{" "}
+                </p>
+                <p className="text-sm line-through text-red-700">
+                  Rs{" "}
+                  {new Intl.NumberFormat("en-IN", {
+                    maximumSignificantDigits: 3,
+                  }).format(product?.price || 0)}
+                </p>
+              </>
+            )}
+
             <h1 className="font-bold">
               Rs{" "}
               {new Intl.NumberFormat("en-IN", {
@@ -58,14 +79,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
               }).format(product?.newPrice || 0)}
             </h1>
           </div>
-          <div className="flex justify-between">
-            <Button onClick={() => router.push(`${product?.id}`)} size="lg">
-              Checkout
-            </Button>
-            <Button size="lg" variant="secondary">
-              To Cart
-            </Button>
-          </div>
+          <Button onClick={() => router.push(`${product?.id}`)} size="lg">
+            Checkout
+          </Button>
         </div>
       </CardFooter>
     </Card>
