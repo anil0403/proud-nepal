@@ -39,7 +39,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <CardFooter>
         <div className=" w-full flex flex-col gap-5 border-t-2 pt-4">
           <div>
-            <p>
+            <p className="text-lg">
               {" "}
               {product?.size.name} | {product?.ram.value} {product?.ram.name} |{" "}
               {product?.color.name} {product?.color.value}{" "}
@@ -55,13 +55,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <div className="flex flex-col gap-1">
             {product?.discount && (
               <>
-                <p className="font-semibold">
+                <p className="font-semibold text-sm">
                   {" "}
                   - Rs{" "}
                   {new Intl.NumberFormat("en-IN", {
                     maximumSignificantDigits: 3,
                   }).format(product?.discount || 0)}{" "}
-                  OFF{" "}
+                  Off{" "}
                 </p>
                 <p className="text-sm line-through text-red-700">
                   Rs{" "}

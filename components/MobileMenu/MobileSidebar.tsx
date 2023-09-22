@@ -35,6 +35,7 @@ const MobileSidebar = ({ items }: MainNavProps) => {
               (item, index) =>
                 item.href && (
                   <Link
+                    onClick={() => closeSidebar()}
                     key={index}
                     href={item.href}
                     className={cn("flex items-center  font-medium text-white")}
