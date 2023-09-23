@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react"
 import useProductId from "@/hooks/useProductId"
 import useProducts from "@/hooks/useProducts"
 import { Button } from "@/components/ui/button"
+import CopyButton from "@/components/ProductCard/Copy"
 import ProductCard from "@/components/ProductCard/ProductCard"
 
 interface ProductIdProps {
@@ -18,7 +19,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
   const [mainImage, setMainImage] = useState(product?.images?.[0]?.url || "")
   const [similarity, Setsimilarity] = useState("")
   const mainImageUrl = product?.images?.[0]?.url
-  
+
   useEffect(() => {
     Setsimilarity(
       product?.isOffice
@@ -31,7 +32,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
     )
     setMainImage(product?.images?.[0]?.url)
   }, [mainImageUrl, product])
-  console.log("Similarity  = ", similarity)
+  // console.log("Similarity  = ", similarity)
   return (
     <div className="relative flex flex-col justify-center my-10">
       {/* Product Display */}
@@ -49,7 +50,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
           <div className="flex flex-wrap">
             {product?.images?.map((img: any, index: any) => {
               return (
-                <div key={index} className="w-1/3 px-2">
+                <div key={img.url} className="w-1/3 px-2">
                   <img
                     src={img.url}
                     alt={`Product Thumbnail ${index + 1}`}
@@ -136,7 +137,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
               }).format(product?.newPrice || 0)}
             </p>
           </p>
-          <div className="mt-6 flex items-center">
+          <div className="mt-6 flex gap-5 items-center">
             <label htmlFor="quantity" className="mr-4 text-gray-700">
               Quantity:
             </label>
@@ -153,6 +154,12 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
             <Button onClick={() => setAlert("Added")} size="lg">
               {alert}
             </Button>
+
+            <CopyButton
+              id={product?.id}
+              label="Copy Link"
+              message="Product Link copied to clipboard."
+            />
           </div>
           <h1 className="text-center text-xl font-bold bg-yellow-500 text-white my-10 py-4">
             We Offer Free Delivery All Over The Nepal!
