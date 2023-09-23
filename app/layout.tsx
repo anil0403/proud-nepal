@@ -43,7 +43,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontSans.variable
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <ToastProvider/>
             <div className="container relative flex min-h-screen flex-col">
               <SiteHeader />
