@@ -8,9 +8,12 @@ interface ProductCardSectionProps {
 
 const ProductCardSection = ({ products }: ProductCardSectionProps) => {
   return (
-    <div className="flex flex-col gap-10 my-10">
+    <div className="flex flex-col gap-10 ">
       <div className="border-b py-10">
-        <h1 className="text-center"> # Explore The Latest Arrivals</h1>
+        <h1 className="text-center mb-10 font-semibold">
+          {" "}
+          # Explore The Latest Arrivals
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
           {products?.map((product: any) =>
             product?.isArchived ? null : product?.isFeatured ? (
@@ -20,7 +23,10 @@ const ProductCardSection = ({ products }: ProductCardSectionProps) => {
         </div>
       </div>
       <div className="border-b py-10">
-        <h1 className="text-center"> Featured Products # Students</h1>
+        <h1 className="text-center mb-10 font-semibold">
+          {" "}
+          Featured Products # Students
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
           {products?.map((product: any) =>
             product?.isArchived ? null : product?.isStudent ? (
@@ -31,7 +37,10 @@ const ProductCardSection = ({ products }: ProductCardSectionProps) => {
       </div>
 
       <div className="border-b py-10">
-        <h1 className="text-center"> Featured Products # Office</h1>
+        <h1 className="text-center mb-10 font-semibold">
+          {" "}
+          Featured Products # Office
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
           {products?.map((product: any) =>
             product?.isArchived ? null : product?.isOffice ? (
@@ -42,7 +51,10 @@ const ProductCardSection = ({ products }: ProductCardSectionProps) => {
       </div>
 
       <div className="py-10">
-        <h1 className="text-center"> Featured Products # Gamming</h1>
+        <h1 className="text-center mb-10 font-semibold">
+          {" "}
+          Featured Products # Gamming
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
           {products?.map((product: any) =>
             product?.isArchived ? null : product?.isGaming ? (
