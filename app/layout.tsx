@@ -1,5 +1,6 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import { ToastProvider } from "@/providers/toast-provider"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -8,13 +9,47 @@ import SiteFooter from "@/components/SiteFooter/SiteFooter"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ToastProvider } from "@/providers/toast-provider";
-
 
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
+  },
+  keywords: [
+    "Laptop",
+    "laptop in Nepal",
+    "Laptop in Nepal at Best Price",
+    "Proud Nepal",
+    "Proud Nepal It Suppliers",
+    "Proud Nepal It Suppliers Pvt. Ltd.",
+    "Laptop Shop in Putalisadak",
+    "Laptop Shop in Kathmandu",
+    "Laptop Shop at Nepal",
+  ],
+  authors: [
+    {
+      name: "Anil Shrestha",
+      url: "https://dev.shresthaanil.com.np",
+    },
+  ],
+  openGraph: {
+    type: "website",
+    title: "Proud Nepal IT Supplies - Your Trusted Laptop Store",
+    siteName: siteConfig.name,
+    description:
+      "Proud Nepal IT Supplies offers a wide range of laptops from various brands, catering to all your computing needs. Find the perfect laptop with us today!",
+    url: "https://pnits.com.np",
+    images:
+      "https://res.cloudinary.com/dnpavfe7j/image/upload/v1692265988/frg9dzs3pqtpbckrzvaw.jpg",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images:
+      "https://res.cloudinary.com/dnpavfe7j/image/upload/v1692265988/frg9dzs3pqtpbckrzvaw.jpg",
+
+    creator: "anilshrestha0403.as@gmail.com",
   },
   description: siteConfig.description,
   themeColor: [
@@ -44,7 +79,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <ToastProvider/>
+            <ToastProvider />
             <div className="container relative flex min-h-screen flex-col">
               <SiteHeader />
               <div className="flex-1">{children}</div>
