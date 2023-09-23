@@ -74,7 +74,7 @@ const HeroSection = () => {
   }, [message, isDeleting, index])
   return (
     <div className="w-full">
-      <div className=" my-10 min-w-content flex flex-col gap-20">
+      <div className=" my-10 min-w-content flex flex-col gap-14">
         <div className="grid grid-cols-1 md:grid-cols-5 items-center  justify-between">
           <div className="col-span-2 flex flex-col  items-center justify-center pr-10">
             <h1 className="text-4xl font-extrabold my-5 text-center">
@@ -100,7 +100,7 @@ const HeroSection = () => {
           )}
         </div>
 
-        <div className="hidden lg:flex gap-10 flex-wrap justify-between my-10">
+        <div className="hidden lg:flex gap-10 flex-wrap justify-between my-5">
           <Image src={apple} height={100} alt="apple_logo" />
           <Image src={acer} height={100} alt="apple_logo" />
           <Image src={dell} height={100} alt="apple_logo" />
