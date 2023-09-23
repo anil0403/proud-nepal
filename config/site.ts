@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Proud Nepal IT Supplies - Your Trusted Laptop Store",
+  name: "Proud Nepal IT Suppliers - Your Trusted Laptop Store",
   description:
-    "Proud Nepal IT Supplies offers a wide range of laptops from various brands, catering to all your computing needs. Find the perfect laptop with us today!",
+    "Proud Nepal IT Suppliers offers a wide range of laptops from various brands, catering to all your computing needs. Find the perfect laptop with us today!",
   mainNav: [
     {
       title: "Home",

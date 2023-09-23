@@ -13,7 +13,7 @@ export function MainNav({ items }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10 relative ">
       <Link href="/" className="flex items-center space-x-2">
-        <h2 className="inline-block font-bold">{siteConfig.name}</h2>
+        <h2 className="inline-block font-bold">Proud Nepal</h2>
       </Link>
       {items?.length ? (
         <>
