@@ -1,12 +1,25 @@
 "use client"
 
 import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
 import useGraphic from "@/hooks/useGraphic"
 import useProcessor from "@/hooks/useProcessor"
 import useProducts from "@/hooks/useProducts"
 import useRam from "@/hooks/useRam"
 import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -16,7 +29,20 @@ import {
 } from "@/components/ui/select"
 import ProductCard from "@/components/ProductCard/ProductCard"
 
-const Browse: React.FC = () => {
+const FormSchema = z.object({
+  processor: z.string().optional(),
+  ram: z.string().optional(),
+  graphic: z.string().optional(),
+  display: z.string().optional(),
+  min: z.number().optional(),
+  max: z.number().optional(),
+})
+
+export default function Browse() {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  })
+
   const { data: products } = useProducts()
   const { data: graphics } = useGraphic()
   const { data: processors } = useProcessor()
@@ -40,48 +66,47 @@ const Browse: React.FC = () => {
   const [filtersApplied, setFiltersApplied] = useState<boolean>(false)
   const [newProduct, setNewProduct] = useState<any>(filteredProduct)
 
-  const filterProcessor = () => {
-    filteredProduct = filteredProduct?.filter((product: any) => {
-      if (!processor) return product
+  const applyFilters = (data: z.infer<typeof FormSchema>) => {
+    const filterProcessor = () => {
+      filteredProduct = filteredProduct?.filter((product: any) => {
+        if (!data.processor) return product
 
-      return processor === product?.sizeId ? product : null
-    })
-  }
-  const filterRam = () => {
-    filteredProduct = filteredProduct?.filter((product: any) => {
-      if (!RAM) return product
-      return RAM === product?.ramId ? product : null
-    })
-  }
-  const filterGraphic = () => {
-    filteredProduct = filteredProduct?.filter((product: any) => {
-      if (!graphic) return product
-      return graphic === product?.colorId ? product : null
-    })
-  }
-  const filterDisplay = () => {
-    filteredProduct = filteredProduct?.filter((product: any) => {
-      if (!display) return product
-      return display === product?.display ? product : null
-    })
-  }
+        return data.processor === product?.sizeId ? product : null
+      })
+    }
+    const filterRam = () => {
+      filteredProduct = filteredProduct?.filter((product: any) => {
+        if (!data.ram) return product
+        return data.ram === product?.ramId ? product : null
+      })
+    }
+    const filterGraphic = () => {
+      filteredProduct = filteredProduct?.filter((product: any) => {
+        if (!data.graphic) return product
+        return data.graphic === product?.colorId ? product : null
+      })
+    }
+    const filterDisplay = () => {
+      filteredProduct = filteredProduct?.filter((product: any) => {
+        if (!data.display) return product
+        return data.display === product?.display ? product : null
+      })
+    }
 
-  const filterMin = () => {
-    filteredProduct = filteredProduct?.filter((product: any) => {
-      if (!min) return product
-      return product?.price >= min ? product : null
-    })
-  }
+    const filterMin = () => {
+      filteredProduct = filteredProduct?.filter((product: any) => {
+        if (!data.min) return product
+        return product?.price >= data.min ? product : null
+      })
+    }
 
-  const filterMaximum = () => {
-    console.log(`max = ${max}`)
-    filteredProduct = filteredProduct?.filter((product: any) => {
-      if (!max) return product
-      return product?.price <= max ? product : null
-    })
-  }
-
-  const applyFilters = () => {
+    const filterMaximum = () => {
+      console.log(`max = ${max}`)
+      filteredProduct = filteredProduct?.filter((product: any) => {
+        if (!data.max) return product
+        return product?.price <= data.max ? product : null
+      })
+    }
     filterProcessor()
     // console.log(`new product = ${newProduct}`);
 
@@ -113,119 +138,173 @@ const Browse: React.FC = () => {
   }
 
   return (
-    <div className="w-full my-10">
-      <div className="container bg-gray-900 p-4 rounded-lg flex flex-col justify-center items-center ">
-        <label className="block text-xl text-white font-bold mb-2 text-left w-full">
-          Filter By:
-        </label>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10 w-full items-center">
-          {/* Processor Dropdown */}
-          <Select onValueChange={(e: any) => setProcessor(e.target.value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select Processor" />
-            </SelectTrigger>
-            <SelectContent>
-              {processors?.map((processor: any) => (
-                <SelectItem key={processor?.id} value={processor?.id}>
-                  {processor?.name}
-                </SelectItem>
-              ))}
-              <SelectItem value="">None</SelectItem>
-            </SelectContent>
-          </Select>
+    <div className="w-full">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(applyFilters)}
+          className="w-full my-10 "
+        >
+          <div className="flex flex-row flex-wrap items-center md:gap-10 ">
+            <div className="w-[200px]">
+              <FormField
+                control={form.control}
+                name="processor"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Processor</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Processor" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="">None</SelectItem>
+                        {processors?.map((processor: any) => (
+                          <SelectItem key={processor?.id} value={processor?.id}>
+                            {processor?.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          <select
-            name="processor"
-            onChange={(e: any) => setProcessor(e.target.value)}
-            className="form-select transition-colors block w-full p-4 rounded-lg  hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          >
-            <option value="" selected hidden disabled>
-              Select Processor
-            </option>
-            {processors?.map((processor: any) => (
-              <option key={processor?.id} value={processor?.id}>
-                {processor?.name}
-              </option>
-            ))}
+            <div className="w-[200px]">
+              <FormField
+                control={form.control}
+                name="ram"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ram</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Ram" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="">None</SelectItem>
+                        {rams?.map((ram: any) => (
+                          <SelectItem key={ram?.id} value={ram?.id}>
+                            {ram?.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-            <option value="">None</option>
-          </select>
+            <div className="w-[200px]">
+              <FormField
+                control={form.control}
+                name="graphic"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Graphics</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Graphics" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="">None</SelectItem>
+                        {graphics?.map((graphic: any) => (
+                          <SelectItem key={graphic?.id} value={graphic?.id}>
+                            {graphic?.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          {/* RAM Dropdown */}
-          <select
-            name="ram"
-            onChange={(e: any) => setRAM(e.target.value)}
-            className="form-select block w-full p-2 rounded-lg transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          >
-            <option value="" selected hidden disabled>
-              Select RAM
-            </option>
-            {rams?.map((ram: any) => (
-              <option key={ram?.id} value={ram?.id}>
-                {ram?.name} {ram?.value}
-              </option>
-            ))}
-            <option value="">None</option>
-          </select>
+            <div className="w-[200px]">
+              <FormField
+                control={form.control}
+                name="display"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Display</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Display" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="">None</SelectItem>
+                        {products?.map((product: any) => (
+                          <SelectItem
+                            key={product?.id}
+                            value={product?.display}
+                          >
+                            {product?.display}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          {/* Graphics Dropdown */}
-          <select
-            name="graphics"
-            onChange={(e: any) => setGraphics(e.target.value)}
-            className="form-select block w-full p-2 rounded-lg transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          >
-            <option value="" selected hidden disabled>
-              Select Graphics
-            </option>
-            {graphics?.map((graphic: any) => (
-              <option key={graphic?.id} value={graphic?.id}>
-                {graphic?.name} {graphic?.value}
-              </option>
-            ))}
-            <option value="">None</option>
-          </select>
+            <div className="w-[200px]">
+              <FormField
+                control={form.control}
+                name="min"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Minimum Price</FormLabel>
+                    <Input />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          {/* Display Dropdown */}
-          <select
-            name="display"
-            onChange={(e: any) => setDisplay(e.target.value)}
-            className="form-select block w-full p-2 rounded-lg transition-colors hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          >
-            <option value="" selected hidden disabled>
-              Select Display
-            </option>
-            {products?.map((product: any) => (
-              <option value={product?.display} key={product?.id}>
-                {product?.display}
-              </option>
-            ))}
-            <option value="">None</option>
-          </select>
-
-          {/* Price Range */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-5 w-full items-center col-span-full  border-2 bordder-white p-4 rounded-lg">
-            <label htmlFor="price" className="text-white text-lg">
-              Price Range:
-            </label>
-
-            <input
-              onChange={(e: any) => setMin(e.target.value)}
-              type="number"
-              placeholder="Minimum price"
-              className="px-2 rounded-lg py-1 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <input
-              onChange={(e: any) => setMax(e.target.value)}
-              type="number"
-              placeholder="Maximum price"
-              className="px-2 rounded-lg py-1 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
+            <div className="w-[200px]">
+              <FormField
+                control={form.control}
+                name="max"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Max Price</FormLabel>
+                    <Input />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
-
-          {/* Apply Filters Button */}
-          <Button onClick={applyFilters}>Apply Filters</Button>
-        </div>
-      </div>
+          <Button type="submit" className="my-10">
+            Apply Filters
+          </Button>
+        </form>
+      </Form>
 
       {isLoading ? (
         <div className="w-16 h-16 my-10 border-t-4 border-blue-500 border-solid rounded-full animate-spin mx-auto"></div>
@@ -239,5 +318,3 @@ const Browse: React.FC = () => {
     </div>
   )
 }
-
-export default Browse

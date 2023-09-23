@@ -39,7 +39,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <CardFooter>
         <div className=" w-full flex flex-col gap-5 border-t-2 pt-4">
           <div>
-            <p className="text-lg">
+            <p className="text-sm">
               {" "}
               {product?.size.name} | {product?.ram.value} {product?.ram.name} |{" "}
               {product?.color.name} {product?.color.value}{" "}
