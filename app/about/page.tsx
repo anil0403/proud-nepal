@@ -5,7 +5,7 @@ const SocialLink: React.FC<{
   href: string
   children: React.ReactNode
 }> = ({ href, children }) => (
-  <li className="mr-4 p-2 rounded-lg transform hover:scale-110 transition-transform duration-300">
+  <li className="mr-4 p-2 rounded-lg  hover:scale-110 transition-transform duration-300">
     <a href={href} target="_blank" rel="noreferrer">
       {children}
     </a>
@@ -16,7 +16,7 @@ const About: React.FC = () => (
   <div className="w-full my-10">
     <section className="py-12">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-8 transform hover:scale-105 transition-transform duration-300">
+        <h2 className="text-3xl font-bold mb-8  hover:scale-105 transition-transform duration-300">
           About Us
         </h2>
         <p className="text-lg mb-6 transition-opacity duration-300 hover:opacity-100">
