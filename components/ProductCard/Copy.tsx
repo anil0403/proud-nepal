@@ -16,7 +16,7 @@ const CopyButton = ({
   message: string
 }) => {
   const onCopy = (id: string) => {
-    const url = `http://localhost:3000/${id}`
+    const url = `https://www.pnits.com.np/${id}`
     console.log(url)
     navigator.clipboard.writeText(url)
     toast.success(message)
