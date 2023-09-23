@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
+import { Metadata } from "next"
 
 import useProductId from "@/hooks/useProductId"
 import useProducts from "@/hooks/useProducts"
@@ -28,8 +29,10 @@ import ProductCard from "@/components/ProductCard/ProductCard"
 interface ProductIdProps {
   params: { productId: string }
 }
+
 const ProductId = ({ params: { productId } }: ProductIdProps) => {
   const { data: product } = useProductId(productId)
+
   const { data: products } = useProducts()
   const [alert, setAlert] = useState("Add to Cart")
   const [quantity, setQuantity] = useState(1)
@@ -305,3 +308,4 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
 }
 
 export default ProductId
+

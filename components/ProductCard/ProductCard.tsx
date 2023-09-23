@@ -1,5 +1,5 @@
 import React from "react"
-import { Pridi } from "next/font/google"
+import { Metadata } from "next"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -18,8 +18,20 @@ interface ProductCardProps {
   product: any
 }
 
+let productTitle
+let productPrice
+let productProcessor
+let productRam
+let ProductBrand
+
 const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter()
+  productTitle = product?.name
+  productPrice = product?.price
+  productProcessor = product?.size?.name
+  productRam = product?.ram?.value
+  ProductBrand = product?.category?.name
+
   return (
     <Card>
       <CardHeader>
@@ -77,7 +89,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 }).format(product?.newPrice || 0)}
               </h1>
             </div>
-            <CopyButton id={product?.id} label="Copy" message="Product Link copied to clipboard." />
+            <CopyButton
+              id={product?.id}
+              label="Copy"
+              message="Product Link copied to clipboard."
+            />
           </div>
 
           <Button onClick={() => router.push(`${product?.id}`)} size="lg">
@@ -90,3 +106,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
 }
 
 export default ProductCard
+
+export const metadata: Metadata = {
+  title: `${ProductBrand} ${productTitle}`,
+  description: `Laptop under ${productPrice}, ${ProductBrand}  ${productTitle}, ${productProcessor}, ${productRam}`,
+}
