@@ -34,8 +34,8 @@ const FormSchema = z.object({
   ram: z.string().optional(),
   graphic: z.string().optional(),
   display: z.string().optional(),
-  min: z.number().optional(),
-  max: z.number().optional(),
+  min: z.number().min(0).optional(),
+  max: z.number().min(0).optional(),
 })
 
 export default function Browse() {
@@ -48,26 +48,35 @@ export default function Browse() {
   const { data: processors } = useProcessor()
   const { data: rams } = useRam()
 
-  console.log("ram = ", rams)
-  console.log("graphic = ", graphics)
-  console.log("processor = ", processors)
+  const [max, setMax] = useState()
+  const [min, setMin] = useState()
+
+  // console.log("ram = ", rams)
+  // console.log("graphic = ", graphics)
+  // console.log("processor = ", processors)
 
   let filteredProduct = products
 
-  const [processor, setProcessor] = useState("")
-  const [RAM, setRAM] = useState("")
-  const [graphic, setGraphics] = useState("")
-  const [display, setDisplay] = useState("")
-  const [price, setPrice] = useState(0)
-  const [min, setMin] = useState(0)
-  const [max, setMax] = useState(0)
+  // const [processor, setProcessor] = useState("")
+  // const [RAM, setRAM] = useState("")
+  // const [graphic, setGraphics] = useState("")
+  // const [display, setDisplay] = useState("")
+  // const [price, setPrice] = useState(0)
+  // const [min, setMin] = useState(0)
+  // const [max, setMax] = useState(0)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [filtersApplied, setFiltersApplied] = useState<boolean>(false)
   const [newProduct, setNewProduct] = useState<any>(filteredProduct)
 
   const applyFilters = (data: z.infer<typeof FormSchema>) => {
+    const minPrice =
+      typeof data.min === "string" ? parseFloat(data.min) : data.min
+    const maxPrice =
+      typeof data.max === "string" ? parseFloat(data.max) : data.max
+
     const filterProcessor = () => {
+      console.log(`processor = ${data.processor}`)
       filteredProduct = filteredProduct?.filter((product: any) => {
         if (!data.processor) return product
 
@@ -93,20 +102,14 @@ export default function Browse() {
       })
     }
 
-    const filterMin = () => {
+    const filterPrice = () => {
       filteredProduct = filteredProduct?.filter((product: any) => {
-        if (!data.min) return product
-        return product?.price >= data.min ? product : null
+        return (
+          (!min || product?.price >= min) && (!max || product?.price <= max)
+        )
       })
     }
 
-    const filterMaximum = () => {
-      console.log(`max = ${max}`)
-      filteredProduct = filteredProduct?.filter((product: any) => {
-        if (!data.max) return product
-        return product?.price <= data.max ? product : null
-      })
-    }
     filterProcessor()
     // console.log(`new product = ${newProduct}`);
 
@@ -119,11 +122,7 @@ export default function Browse() {
     filterGraphic()
     // console.log(`new product = ${newProduct}`);
 
-    filterMin()
-    // console.log(`new product = ${newProduct}`);
-
-    filterMaximum()
-    // console.log(`new product = ${newProduct}`);
+    filterPrice()
 
     setNewProduct(filteredProduct)
 
@@ -142,10 +141,12 @@ export default function Browse() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(applyFilters)}
-          className="w-full my-10 "
+          className="w-full my-10 border-b"
         >
-          <div className="flex flex-row flex-wrap items-center md:gap-10 ">
-            <div className="w-[200px]">
+          <h1 className="text-xl font-bold mb-5 ">Filter Products</h1>
+          {/* <div className="flex flex-row flex-wrap items-center md:gap-10 "> */}
+          <div className="grid items-center justify-between  grid-cols-1 md:grid-cols-3   lg:grid-cols-4 xl:grid-cols-6 gap-5 border-t py-5">
+            <div className=" w-full md:w-[200px]">
               <FormField
                 control={form.control}
                 name="processor"
@@ -176,7 +177,7 @@ export default function Browse() {
               />
             </div>
 
-            <div className="w-[200px]">
+            <div className="w-full md:w-[200px]">
               <FormField
                 control={form.control}
                 name="ram"
@@ -207,7 +208,7 @@ export default function Browse() {
               />
             </div>
 
-            <div className="w-[200px]">
+            <div className="w-full md:w-[200px]">
               <FormField
                 control={form.control}
                 name="graphic"
@@ -238,7 +239,7 @@ export default function Browse() {
               />
             </div>
 
-            <div className="w-[200px]">
+            <div className="w-full md:w-[200px]">
               <FormField
                 control={form.control}
                 name="display"
@@ -266,41 +267,53 @@ export default function Browse() {
                         ))}
                       </SelectContent>
                     </Select>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
-            <div className="w-[200px]">
+            <div className="w-full md:w-[200px]">
               <FormField
                 control={form.control}
                 name="min"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Minimum Price</FormLabel>
-                    <Input />
-                    <FormMessage />
+                    <FormControl>
+                      <input
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        onChange={(e: any) => setMin(e.target.value)}
+                        placeholder="min price"
+                        type="number"
+                      />
+                    </FormControl>
                   </FormItem>
                 )}
               />
             </div>
 
-            <div className="w-[200px]">
+            <div className="w-full md:w-[200px]">
               <FormField
                 control={form.control}
                 name="max"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Max Price</FormLabel>
-                    <Input />
+                    <FormLabel>Maximum Price</FormLabel>
+                    <FormControl>
+                      <input
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        onChange={(e: any) => setMax(e.target.value)}
+                        placeholder="max price"
+                        type="number"
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
           </div>
-          <Button type="submit" className="my-10">
+          <Button type="submit" className="my-5">
             Apply Filters
           </Button>
         </form>

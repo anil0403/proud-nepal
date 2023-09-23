@@ -28,6 +28,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* <CardDescription>Card Description</CardDescription> */}
       </CardHeader>
       <CardContent>
+        <div className="flex justify-center items-center">
         <Image
           src={product?.images[0].url}
           width={200}
@@ -35,6 +36,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
           alt="thumbnail"
           className="hover:scale-110 transition-all  ease-in-out hover:cursor-pointer"
         />
+        </div>
+
       </CardContent>
       <CardFooter>
         <div className=" w-full flex flex-col gap-5 border-t-2 pt-4">
