@@ -228,7 +228,7 @@ export default function Browse() {
                         <SelectItem value="">None</SelectItem>
                         {graphics?.map((graphic: any) => (
                           <SelectItem key={graphic?.id} value={graphic?.id}>
-                            {graphic?.name}
+                            {graphic?.name} {graphic?.value}
                           </SelectItem>
                         ))}
                       </SelectContent>

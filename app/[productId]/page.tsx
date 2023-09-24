@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react"
 import { Metadata } from "next"
+import Link from "next/link"
+import { Facebook, Instagram, Music2, Youtube } from "lucide-react"
 
 import useProductId from "@/hooks/useProductId"
 import useProducts from "@/hooks/useProducts"
@@ -37,22 +39,12 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
   const [alert, setAlert] = useState("Add to Cart")
   const [quantity, setQuantity] = useState(1)
   const [mainImage, setMainImage] = useState(product?.images?.[0]?.url || "")
-  const [similarity, Setsimilarity] = useState("")
   const mainImageUrl = product?.images?.[0]?.url
 
   useEffect(() => {
-    Setsimilarity(
-      product?.isOffice
-        ? "isOffice"
-        : product?.isGaming
-        ? "isGaming"
-        : product?.isStudent
-        ? "isStudent"
-        : ""
-    )
     setMainImage(product?.images?.[0]?.url)
   }, [mainImageUrl, product])
-  // console.log("Similarity  = ", similarity)
+
   return (
     <div className="relative flex flex-col justify-center my-10">
       <h2 className="text-center font-bold md:hidden mb-4">
@@ -116,7 +108,33 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <h2 className="text-red-800 font-bold my-4">
+              <div className="flex gap-5 text-foreground bg-background">
+                {product?.fbLink && (
+                  <Link target="_blank" href={product?.fbLink}>
+                    <Facebook
+                      className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
+                      size={40}
+                    />
+                  </Link>
+                )}
+                {product?.instaLink && (
+                  <Link target="_blank" href={product?.instaLink}>
+                    <Instagram
+                      className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
+                      size={40}
+                    />
+                  </Link>
+                )}
+                {product?.tiktokLink && (
+                  <Link target="_blank" href={product?.tiktokLink}>
+                    <Music2
+                      className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
+                      size={40}
+                    />
+                  </Link>
+                )}
+              </div>
+              <h2 className=" font-bold my-4">
                 Free Items : {product?.freeItems}
               </h2>
               <p className="mb-6 text-sky-500 font-bold text-3xl">
@@ -163,8 +181,6 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
               </div>
             </CardFooter>
           </Card>
-
-          <h1 className="text-2xl font-bold mb py-4"></h1>
 
           <h1 className="text-center text-xl font-bold bg-yellow-500 text-white my-10 py-3">
             We Offer Free Delivery All Over The Nepal!
@@ -292,11 +308,32 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
 
       {/* Similar Products */}
       <div className="my-12 p-5">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">
+        <h2 className="text-3xl font-bold mb-">
           Similar Products
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
+            {/* {products?.map((item: any) =>
+              item?.isArchived ? null : item?.isGaming &&
+                item?.isGaming &&
+                product?.isGaming ? (
+                <ProductCard key={item?.id} product={item} />
+              ) : null
+            )} */}
+
             {products?.map((item: any) =>
-              item?.isArchived ? null : similarity ? (
+              item?.isArchived ? null : item?.isGaming && product?.isGaming ? (
+                <ProductCard key={item?.id} product={item} />
+              ) : null
+            )}
+
+            {products?.map((item: any) =>
+              item?.isArchived ? null : item?.isStudent &&
+                product?.isStudent ? (
+                <ProductCard key={item?.id} product={item} />
+              ) : null
+            )}
+
+            {products?.map((item: any) =>
+              item?.isArchived ? null : item?.isOffice && product?.isOffice ? (
                 <ProductCard key={item?.id} product={item} />
               ) : null
             )}
@@ -308,4 +345,3 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
 }
 
 export default ProductId
-
