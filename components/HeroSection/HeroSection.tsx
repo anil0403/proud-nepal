@@ -23,7 +23,6 @@ const texts = [
 
 const HeroSection = () => {
   const { data: products , isLoading } = useProducts()
-  console.log(`isLoading`, isLoading)
 
   return (
     <div className="w-full">
