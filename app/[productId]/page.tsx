@@ -77,11 +77,11 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
         </div>
 
         {/* Right Side: Product Details */}
-        <div className="w-full md:w-1/2  pt-0">
+        <div className="w-full md:w-1/2 pt-0">
           <Card>
             <CardHeader>
               <CardTitle>
-                <h2>
+                <h2 className="text-2xl font-bold">
                   {product?.category?.name} {product?.name} |{" "}
                   {product?.size?.name} {product?.size.value} |{" "}
                   {product?.ram?.value} {product?.ram?.name}
@@ -102,8 +102,9 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                     {product?.color?.name} {product?.color?.value}
                   </li>
                   <li>{product?.display}</li>
-
                   <li>{product?.waarantyNew}</li>
+                  <li className="font-bold text-lg list-none">Free Items: {product?.freeItems}</li>
+                  <li className="font-bold text-lg list-none">Free Delivery All Over Nepal!</li>
                 </ul>
               </CardDescription>
             </CardHeader>
@@ -134,10 +135,8 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                   </Link>
                 )}
               </div>
-              <h2 className=" font-bold my-4">
-                Free Items : {product?.freeItems}
-              </h2>
-              <p className="mb-6 text-sky-500 font-bold text-3xl">
+              <h2 className="font-bold my-4 text-xl"></h2>
+              <p className="mb-6  ">
                 {product?.discount && product?.discount > 0 && (
                   <span className="line-through text-red-700 text-sm">
                     Rs{" "}
@@ -146,16 +145,16 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                     }).format(product?.price || 0)}
                   </span>
                 )}
-                <p>
+                <span className=" font-bold text-2xl ml-2">
                   Rs{" "}
                   {new Intl.NumberFormat("en-IN", {
                     maximumSignificantDigits: 3,
                   }).format(product?.newPrice || 0)}
-                </p>
+                </span>
               </p>
             </CardContent>
             <CardFooter>
-              <div className="mt-6 flex flex-wrap gap-5">
+              <div className=" flex flex-wrap gap-5">
                 <label htmlFor="quantity" className="mr-4 text-gray-700">
                   Quantity:
                 </label>
@@ -164,15 +163,15 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                   id="quantity"
                   value={quantity}
                   onChange={(e: any) => setQuantity(e.target.value)}
-                  className="border rounded-lg p-2 mr-6 w-24 text-center transition-shadow focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:ring-opacity/50"
+                  className="border rounded-lg p-2 mr-6 w-24 text-center transition-shadow focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
                 />
-                {/* <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transform transition-transform hover:scale-105 shadow-md hover:shadow-lg">
-              {alert}
-            </button> */}
-                <Button onClick={() => setAlert("Added")} size="lg">
+                <Button
+                  onClick={() => setAlert("Added")}
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transform transition-transform hover:scale-105 shadow-md hover:shadow-lg"
+                >
                   {alert}
                 </Button>
-
                 <CopyButton
                   id={product?.id}
                   label="Copy Link"
@@ -180,11 +179,8 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                 />
               </div>
             </CardFooter>
+            <h1 className="text-center text-xl font-bold bg-background  py-3"></h1>
           </Card>
-
-          <h1 className="text-center text-xl font-bold bg-yellow-500 text-white my-10 py-3">
-            We Offer Free Delivery All Over The Nepal!
-          </h1>
         </div>
       </div>
 
