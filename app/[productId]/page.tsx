@@ -103,8 +103,12 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                   </li>
                   <li>{product?.display}</li>
                   <li>{product?.waarantyNew}</li>
-                  <li className="font-bold text-lg list-none">Free Items: {product?.freeItems}</li>
-                  <li className="font-bold text-lg list-none">Free Delivery All Over Nepal!</li>
+                  <li className="font-bold text-lg list-none">
+                    Free Items: {product?.freeItems}
+                  </li>
+                  <li className="font-bold text-lg list-none">
+                    Free Delivery All Over Nepal!
+                  </li>
                 </ul>
               </CardDescription>
             </CardHeader>

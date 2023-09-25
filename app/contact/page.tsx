@@ -38,7 +38,7 @@ const Contact = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Name of your project" />
+                <Input id="name" placeholder="Enter Name" />
               </div>
 
               <div className="flex flex-col space-y-1.5">

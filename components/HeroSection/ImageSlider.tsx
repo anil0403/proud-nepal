@@ -1,26 +1,29 @@
-// components/ImageSlider.tsx
+"use client"
+
 import { useEffect, useRef, useState } from "react"
+import useBillboards from "@/hooks/useBillboard"
 
-type Props = {
-  images: string[]
-}
+const ImageSlider = () => {
+  const { data: billboards, isLoading } = useBillboards()
+  const images =
+    billboards === undefined
+      ? []
+      : billboards.map((billboard: any) => billboard.imageUrl)
 
-const ImageSlider: React.FC<Props> = ({ images }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const containerRef = useRef(null)
 
   useEffect(() => {
-    console.log("Setting up interval");
+    console.log("Setting up interval")
     const autoSlide = setInterval(() => {
-      console.log("Changing slide");
-      setActiveIndex((prev) => (prev + 1) % images?.length);
-    }, 1000);
+      console.log("Changing slide")
+      setActiveIndex((prev) => (prev + 1) % images?.length)
+    }, 2000)
     return () => {
-      console.log("Clearing interval");
-      clearInterval(autoSlide);
-    };
-  }, [images]);
-  
+      console.log("Clearing interval")
+      clearInterval(autoSlide)
+    }
+  }, [images])
 
   const goToSlide = (index: number) => {
     setActiveIndex(index)
@@ -41,7 +44,7 @@ const ImageSlider: React.FC<Props> = ({ images }) => {
         style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         ref={containerRef}
       >
-        {images?.map((image, index) => (
+        {images?.map((image: any, index: number) => (
           <img key={index} src={image} className="min-w-full" alt="Slide" />
         ))}
       </div>
@@ -56,7 +59,7 @@ const ImageSlider: React.FC<Props> = ({ images }) => {
         </button>
       </div>
       <div className="absolute bottom-4 left-1/2  -translate-x-1/2 space-x-2 flex">
-        {images?.map((_, idx) => (
+        {images?.map((_: any, idx: number) => (
           <button
             key={idx}
             onClick={() => goToSlide(idx)}

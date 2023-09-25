@@ -1,68 +1,43 @@
 import React from "react"
 
-import ProductCard from "../ProductCard/ProductCard"
+import Section from "./Section"
 
 interface ProductCardSectionProps {
   products: any
 }
 
 const ProductCardSection = ({ products }: ProductCardSectionProps) => {
+  const featuredProducts = products?.filter((product: any) =>
+    product?.isArchived ? null : product?.isFeatured ? product : null
+  )
+
+  const officeProducts = products?.filter((product: any) =>
+    product?.isArchived ? null : product?.isOffice ? product : null
+  )
+
+  const studentProducts = products?.filter((product: any) =>
+    product?.isArchived ? null : product?.isStudent ? product : null
+  )
+
+  const gamingProducts = products?.filter((product: any) =>
+    product?.isArchived ? null : product?.isGaming ? product : null
+  )
+
   return (
     <div className="flex flex-col gap-10 ">
-      <div className="border-b py-10">
-        <h1 className="text-center mb-10 font-semibold">
-          {" "}
-          # Explore The Latest Arrivals
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
-          {products?.map((product: any) =>
-            product?.isArchived ? null : product?.isFeatured ? (
-              <ProductCard key={product?.id} product={product} />
-            ) : null
-          )}
-        </div>
-      </div>
-      <div className="border-b py-10">
-        <h1 className="text-center mb-10 font-semibold">
-          {" "}
-          Featured Products # Students
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
-          {products?.map((product: any) =>
-            product?.isArchived ? null : product?.isStudent ? (
-              <ProductCard key={product?.id} product={product} />
-            ) : null
-          )}
-        </div>
-      </div>
+      <Section
+        products={featuredProducts}
+        label="# Explore The Latest Arrivals"
+      />
 
-      <div className="border-b py-10">
-        <h1 className="text-center mb-10 font-semibold">
-          {" "}
-          Featured Products # Office
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
-          {products?.map((product: any) =>
-            product?.isArchived ? null : product?.isOffice ? (
-              <ProductCard key={product?.id} product={product} />
-            ) : null
-          )}
-        </div>
-      </div>
+      <Section
+        products={studentProducts}
+        label="Featured Products # Students"
+      />
 
-      <div className="py-10">
-        <h1 className="text-center mb-10 font-semibold">
-          {" "}
-          Featured Products # Gamming
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
-          {products?.map((product: any) =>
-            product?.isArchived ? null : product?.isGaming ? (
-              <ProductCard key={product?.id} product={product} />
-            ) : null
-          )}
-        </div>
-      </div>
+      <Section products={officeProducts} label="Featured Products # Office" />
+
+      <Section products={gamingProducts} label="Featured Products # Gaming" />
     </div>
   )
 }
