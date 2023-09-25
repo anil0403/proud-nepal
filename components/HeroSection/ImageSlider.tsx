@@ -45,7 +45,7 @@ const ImageSlider = () => {
         ref={containerRef}
       >
         {images?.map((image: any, index: number) => (
-          <img key={index} src={image} className="min-w-full" alt="Slide" />
+          <img key={index} src={image} className="min-w-full h-[400px]" alt="Slide" />
         ))}
       </div>
       <div className="absolute top-1/2 left-4  -translate-y-1/2">
