@@ -26,7 +26,7 @@ const HeroSection = () => {
 
   return (
     <div className="w-full">
-      <div className=" my-10 min-w-content flex flex-col gap-14">
+      <div className=" my-10 min-w-content flex flex-col gap-10">
         <div className="grid grid-cols-1 md:grid-cols-5 items-center  justify-between">
           <TypeWriter />
 
@@ -35,7 +35,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="hidden lg:flex gap-10 flex-wrap justify-between my-5">
+        <div className="hidden lg:flex gap-10 flex-wrap justify-between my-2">
           <Image src={apple} height={100} alt="apple_logo" />
           <Image src={acer} height={100} alt="apple_logo" />
           <Image src={dell} height={100} alt="apple_logo" />
