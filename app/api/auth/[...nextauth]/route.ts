@@ -8,7 +8,7 @@ import GoogleProvider from "next-auth/providers/google"
 
 const prisma = new PrismaClient()
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
 
   providers: [
@@ -49,8 +49,8 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
 }
-// const handler = NextAuth(authOptions)
+const handler = NextAuth(authOptions)
 
-// export { handler as GET, handler as POST }
+export { handler as GET, handler as POST }
 
-export default NextAuth(authOptions)
+// export default NextAuth(authOptions)
