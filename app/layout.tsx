@@ -1,5 +1,6 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import AuthPrpvider from "@/providers/provider"
 import { ToastProvider } from "@/providers/toast-provider"
 
 import { siteConfig } from "@/config/site"
@@ -78,15 +79,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontSans.variable
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <ToastProvider />
-            <div className="container relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
-              <SiteFooter />
-            </div>
-            <TailwindIndicator />
-          </ThemeProvider>
+          <AuthPrpvider>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+              <ToastProvider />
+              <div className="container relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="flex-1">{children}</div>
+                <SiteFooter />
+              </div>
+              <TailwindIndicator />
+            </ThemeProvider>
+          </AuthPrpvider>
         </body>
       </html>
     </>

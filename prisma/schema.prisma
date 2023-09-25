@@ -1,0 +1,251 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Store {
+  id         String      @id @default(uuid())
+  name       String
+  userId     String
+  billboards Billboard[] @relation("StoreToBillboard")
+  categories Category[]  @relation("StoreToCategory")
+  products   Product[]   @relation("StoreToProduct")
+  sizes      Size[]      @relation("StoreToSize")
+  ram        Ram[]       @relation("StoreToRam")
+  core       Core[]      @relation("StoreToCore")
+  colors     Color[]     @relation("StoreToColor")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Billboard {
+  id         String     @id @default(uuid())
+  storeId    String
+  store      Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
+  label      String
+  imageUrl   String
+  categories Category[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([storeId])
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  storeId     String // Foreign Key to Store
+  store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
+  billboardId String // Foreign Key to Billboard
+  billboard   Billboard @relation(fields: [billboardId], references: [id])
+  name        String
+  products    Product[] @relation("CategoryToProduct")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([storeId])
+  @@index([billboardId])
+}
+
+model Cart {
+  id       Int       @id @default(autoincrement())
+  quantity Int?
+  userId   String    @unique
+  user     User      @relation(fields: [userId], references: [id])
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  storeId       String // Foreign Key to Store
+  store         Store    @relation("StoreToProduct", fields: [storeId], references: [id])
+  categoryId    String // Foreign Key to Category
+  category      Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  name          String
+  price         Float
+  isFeatured    Boolean? @default(false)
+  isGaming      Boolean? @default(false)
+  isArchived    Boolean? @default(false)
+  isStudent     Boolean? @default(false)
+  isOffice      Boolean? @default(false)
+  fbLink        String?
+  tiktokLink    String?
+  instaLink     String?
+  sizeId        String // Foreign Key to Size
+  size          Size     @relation(fields: [sizeId], references: [id])
+  stock         Int
+  memorySlot    String
+  storage       String
+  StorageSlot   String
+  keyboard      String
+  camera        String
+  display       String
+  ethernet      String
+  wlanBluetooth String
+  fingerPrint   String
+  powerAdapter  String
+  battery       String
+  colorId       String // Foreign Key to Color
+  color         Color    @relation(fields: [colorId], references: [id])
+  ramId         String // Foreign Key to Ram
+  ram           Ram      @relation(fields: [ramId], references: [id])
+  images        Image[] // Relation to Image model
+  userId        String? // Foreign Key to User
+  user          User?    @relation(fields: [userId], references: [id])
+  cartId        Int? // Foreign Key to Cart
+  cart          Cart?    @relation(fields: [cartId], references: [id])
+  coreId        String?
+  core          Core?    @relation(fields: [coreId], references: [id])
+  warrantyNew   String?
+  warranty      Float?
+
+  freeItems String?
+  discount  Float?
+  newPrice  Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId]) // Index for optimizing queries using userId
+  @@index([storeId])
+  @@index([categoryId])
+  @@index([sizeId])
+  @@index([colorId])
+  @@index([ramId])
+  @@index([cartId]) // Index for cartId for better performance.
+  @@index([coreId]) // Index for cartId for better performance.
+}
+
+model Size {
+  id        String    @id @default(uuid())
+  storeId   String // Foreign Key to Store
+  store     Store     @relation("StoreToSize", fields: [storeId], references: [id])
+  name      String
+  value     String
+  products  Product[] // Relation to Product model
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([storeId])
+}
+
+model Core {
+  id        String    @id @default(uuid())
+  storeId   String // Foreign Key to Store
+  store     Store     @relation("StoreToCore", fields: [storeId], references: [id])
+  core      String
+  thread    String
+  products  Product[] // Relation to Product model
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([storeId])
+}
+
+model Ram {
+  id        String    @id @default(uuid())
+  storeId   String // Foreign Key to Store
+  store     Store     @relation("StoreToRam", fields: [storeId], references: [id])
+  name      String
+  value     String
+  products  Product[] // Relation to Product model
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([storeId])
+}
+
+model Color {
+  id        String    @id @default(uuid())
+  storeId   String // Foreign Key to Store
+  store     Store     @relation("StoreToColor", fields: [storeId], references: [id])
+  name      String
+  value     String
+  products  Product[] // Relation to Product model
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([storeId])
+}
+
+model Image {
+  id        String   @id @default(uuid())
+  productId String // Foreign Key to Product
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String // URL of the image
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+}
+
+model User {
+  id             String    @id @default(uuid())
+  name           String?
+  email          String?   @unique
+  username       String?
+  hashedPassword String?
+  isAdmin        Boolean?
+  isUser         Boolean?
+  address        String?
+  billingAddress String?
+  phone          String?
+  emailVerified  DateTime? @map(name: "email_verified")
+  image          String?
+  products       Product[]
+  cart           Cart?
+
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime  @default(now()) @map(name: "updated_at")
+  accounts  Account[]
+  sessions  Session[]
+
+  @@index([email]) // Index on email for better performance.
+}
+
+model Account {
+  id String @id @default(uuid())
+
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id String @id @default(uuid())
+
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}

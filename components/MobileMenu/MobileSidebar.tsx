@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { X } from "lucide-react"
+import { LogOut, Settings, X } from "lucide-react"
 
 import { NavItem } from "@/types/nav"
 import { cn } from "@/lib/utils"
@@ -45,6 +45,62 @@ const MobileSidebar = ({ items }: MainNavProps) => {
                   </Link>
                 )
             )}
+            <Link
+              onClick={() => closeSidebar()}
+              href="/cart"
+              rel="noreferrer"
+              className={cn("flex items-center  font-medium text-white")}
+            >
+              Cart
+            </Link>
+
+            <Link
+              onClick={() => closeSidebar()}
+              href="/products"
+              rel="noreferrer"
+              className={cn("flex items-center  font-medium text-white")}
+            >
+              Products
+            </Link>
+
+            <Link
+              onClick={() => closeSidebar()}
+              href="/register"
+              rel="noreferrer"
+              className={cn("flex items-center  font-medium text-white")}
+            >
+              Sign Up
+            </Link>
+
+            <Link
+              onClick={() => closeSidebar()}
+              href="/api/auth/signin"
+              rel="noreferrer"
+              className={cn("flex items-center  font-medium text-white")}
+            >
+              Sign In
+            </Link>
+
+            <Link
+              onClick={() => closeSidebar()}
+              href="/auth"
+              rel="noreferrer"
+              className={cn("flex items-center  font-medium text-white")}
+            >
+              Manage Account
+            </Link>
+
+            <Link
+              onClick={() => closeSidebar()}
+              href="/auth"
+              rel="noreferrer"
+              className={cn("flex items-center  font-medium text-white")}
+            >
+              <p className="flex gap-2 my-5 border-t-2 w-full p-4">
+                <LogOut />
+                Logout
+              </p>
+            </Link>
           </nav>
         </div>
       )}

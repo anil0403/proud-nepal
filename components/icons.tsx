@@ -7,6 +7,7 @@ import {
   Instagram,
   Facebook,
   Youtube,
+  UserIcon,
 } from "lucide-react"
 
 export type Icon = LucideIcon
