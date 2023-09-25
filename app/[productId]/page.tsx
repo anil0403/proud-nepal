@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Table,
   TableBody,
@@ -35,7 +36,7 @@ interface ProductIdProps {
 const ProductId = ({ params: { productId } }: ProductIdProps) => {
   const { data: product } = useProductId(productId)
 
-  const { data: products } = useProducts()
+  const { data: products, isLoading } = useProducts()
   const [alert, setAlert] = useState("Add to Cart")
   const [quantity, setQuantity] = useState(1)
   const [mainImage, setMainImage] = useState(product?.images?.[0]?.url || "")
@@ -55,12 +56,15 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
         {/* Left Side: Images */}
         <div className="w-full md:w-1/2 px-1 pt-0">
           <div className=" mb-4">
-            {/* <Image src={mainImage} width={400} height={400} alt="Main Product"/> */}
-            <img
-              src={mainImage}
-              alt="Main Product"
-              className=" mx-auto w-[400px] h-[400px] p-3  md:w-[600px] md:h-[600px] aspect-auto object-contain object-center rounded-lg shadow-inner transition-opacity mb-4 border-2"
-            />
+            {isLoading ? (
+              <Skeleton className="mx-auto w-[400px] h-[400px] p-3  md:w-[600px] md:h-[600px]" />
+            ) : (
+              <img
+                src={mainImage}
+                alt="Main Product"
+                className=" mx-auto w-[400px] h-[400px] p-3  md:w-[600px] md:h-[600px] aspect-auto object-contain object-center rounded-lg shadow-inner transition-opacity mb-4 border-2"
+              />
+            )}
           </div>
           <div className="flex flex-wrap  items-center justify-center p-5 gap-5">
             {product?.images?.map((img: any, index: any) => {
@@ -78,113 +82,117 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
 
         {/* Right Side: Product Details */}
         <div className="w-full md:w-1/2 pt-0">
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                <h2 className="text-2xl font-bold">
-                  {product?.category?.name} {product?.name} |{" "}
-                  {product?.size?.name} {product?.size.value} |{" "}
-                  {product?.ram?.value} {product?.ram?.name}
-                </h2>
-              </CardTitle>
-              <CardDescription>
-                <ul className="flex flex-col gap-3 my-2 list-disc mx-4">
-                  <li>
-                    {product?.category?.name} {product?.name}
-                  </li>
-                  <li>
-                    {product?.size?.name} {product?.size.value}
-                  </li>
-                  <li>
+          {isLoading ? (
+            <Skeleton className="w-full h-full" />
+          ) : (
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  <h2 className="text-2xl font-bold">
+                    {product?.category?.name} {product?.name} |{" "}
+                    {product?.size?.name} {product?.size.value} |{" "}
                     {product?.ram?.value} {product?.ram?.name}
-                  </li>
-                  <li>
-                    {product?.color?.name} {product?.color?.value}
-                  </li>
-                  <li>{product?.display}</li>
-                  <li>{product?.waarantyNew}</li>
-                  <li className="font-bold text-lg list-none">
-                    Free Items: {product?.freeItems}
-                  </li>
-                  <li className="font-bold text-lg list-none">
-                    Free Delivery All Over Nepal!
-                  </li>
-                </ul>
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex gap-5 text-foreground bg-background">
-                {product?.fbLink && (
-                  <Link target="_blank" href={product?.fbLink}>
-                    <Facebook
-                      className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
-                      size={40}
-                    />
-                  </Link>
-                )}
-                {product?.instaLink && (
-                  <Link target="_blank" href={product?.instaLink}>
-                    <Instagram
-                      className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
-                      size={40}
-                    />
-                  </Link>
-                )}
-                {product?.tiktokLink && (
-                  <Link target="_blank" href={product?.tiktokLink}>
-                    <Music2
-                      className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
-                      size={40}
-                    />
-                  </Link>
-                )}
-              </div>
-              <h2 className="font-bold my-4 text-xl"></h2>
-              <p className="mb-6  ">
-                {product?.discount && product?.discount > 0 && (
-                  <span className="line-through text-red-700 text-sm">
+                  </h2>
+                </CardTitle>
+                <CardDescription>
+                  <ul className="flex flex-col gap-3 my-2 list-disc mx-4">
+                    <li>
+                      {product?.category?.name} {product?.name}
+                    </li>
+                    <li>
+                      {product?.size?.name} {product?.size.value}
+                    </li>
+                    <li>
+                      {product?.ram?.value} {product?.ram?.name}
+                    </li>
+                    <li>
+                      {product?.color?.name} {product?.color?.value}
+                    </li>
+                    <li>{product?.display}</li>
+                    <li>{product?.waarantyNew}</li>
+                    <li className="font-bold text-lg list-none">
+                      Free Items: {product?.freeItems}
+                    </li>
+                    <li className="font-bold text-lg list-none">
+                      Free Delivery All Over Nepal!
+                    </li>
+                  </ul>
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex gap-5 text-foreground bg-background">
+                  {product?.fbLink && (
+                    <Link target="_blank" href={product?.fbLink}>
+                      <Facebook
+                        className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
+                        size={40}
+                      />
+                    </Link>
+                  )}
+                  {product?.instaLink && (
+                    <Link target="_blank" href={product?.instaLink}>
+                      <Instagram
+                        className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
+                        size={40}
+                      />
+                    </Link>
+                  )}
+                  {product?.tiktokLink && (
+                    <Link target="_blank" href={product?.tiktokLink}>
+                      <Music2
+                        className="hover:bg-slate-200 p-2 rounded-md hover:cursor-pointer"
+                        size={40}
+                      />
+                    </Link>
+                  )}
+                </div>
+                <h2 className="font-bold my-4 text-xl"></h2>
+                <p className="mb-6  ">
+                  {product?.discount && product?.discount > 0 && (
+                    <span className="line-through text-red-700 text-sm">
+                      Rs{" "}
+                      {new Intl.NumberFormat("en-IN", {
+                        maximumSignificantDigits: 3,
+                      }).format(product?.price || 0)}
+                    </span>
+                  )}
+                  <span className=" font-bold text-2xl ml-2">
                     Rs{" "}
                     {new Intl.NumberFormat("en-IN", {
                       maximumSignificantDigits: 3,
-                    }).format(product?.price || 0)}
+                    }).format(product?.newPrice || 0)}
                   </span>
-                )}
-                <span className=" font-bold text-2xl ml-2">
-                  Rs{" "}
-                  {new Intl.NumberFormat("en-IN", {
-                    maximumSignificantDigits: 3,
-                  }).format(product?.newPrice || 0)}
-                </span>
-              </p>
-            </CardContent>
-            <CardFooter>
-              <div className=" flex flex-wrap gap-5">
-                <label htmlFor="quantity" className="mr-4 text-gray-700">
-                  Quantity:
-                </label>
-                <input
-                  type="number"
-                  id="quantity"
-                  value={quantity}
-                  onChange={(e: any) => setQuantity(e.target.value)}
-                  className="border rounded-lg p-2 mr-6 w-24 text-center transition-shadow focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
-                />
-                <Button
-                  onClick={() => setAlert("Added")}
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transform transition-transform hover:scale-105 shadow-md hover:shadow-lg"
-                >
-                  {alert}
-                </Button>
-                <CopyButton
-                  id={product?.id}
-                  label="Copy Link"
-                  message="Product Link copied to clipboard."
-                />
-              </div>
-            </CardFooter>
-            <h1 className="text-center text-xl font-bold bg-background  py-3"></h1>
-          </Card>
+                </p>
+              </CardContent>
+              <CardFooter>
+                <div className=" flex flex-wrap gap-5">
+                  <label htmlFor="quantity" className="mr-4 text-gray-700">
+                    Quantity:
+                  </label>
+                  <input
+                    type="number"
+                    id="quantity"
+                    value={quantity}
+                    onChange={(e: any) => setQuantity(e.target.value)}
+                    className="border rounded-lg p-2 mr-6 w-24 text-center transition-shadow focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+                  />
+                  <Button
+                    onClick={() => setAlert("Added")}
+                    size="lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transform transition-transform hover:scale-105 shadow-md hover:shadow-lg"
+                  >
+                    {alert}
+                  </Button>
+                  <CopyButton
+                    id={product?.id}
+                    label="Copy Link"
+                    message="Product Link copied to clipboard."
+                  />
+                </div>
+              </CardFooter>
+              <h1 className="text-center text-xl font-bold bg-background  py-3"></h1>
+            </Card>
+          )}
         </div>
       </div>
 

@@ -22,7 +22,8 @@ const texts = [
 ]
 
 const HeroSection = () => {
-  const { data: products } = useProducts()
+  const { data: products , isLoading } = useProducts()
+  console.log(`isLoading`, isLoading)
 
   return (
     <div className="w-full">
@@ -44,7 +45,7 @@ const HeroSection = () => {
           <Image src={samsung} height={100} alt="apple_logo" />
         </div>
       </div>
-      <ProductCardSection products={products} />
+      <ProductCardSection products={products} isLoading={isLoading}/>
     </div>
   )
 }

@@ -4,9 +4,13 @@ import Section from "./Section"
 
 interface ProductCardSectionProps {
   products: any
+  isLoading: boolean
 }
 
-const ProductCardSection = ({ products }: ProductCardSectionProps) => {
+const ProductCardSection = ({
+  products,
+  isLoading,
+}: ProductCardSectionProps) => {
   const featuredProducts = products?.filter((product: any) =>
     product?.isArchived ? null : product?.isFeatured ? product : null
   )
@@ -28,16 +32,18 @@ const ProductCardSection = ({ products }: ProductCardSectionProps) => {
       <Section
         products={featuredProducts}
         label="# Explore The Latest Arrivals"
+        isLoading ={isLoading}
       />
 
       <Section
         products={studentProducts}
         label="Featured Products # Students"
+        isLoading ={isLoading}
       />
 
-      <Section products={officeProducts} label="Featured Products # Office" />
+      <Section products={officeProducts} isLoading={isLoading} label="Featured Products # Office" />
 
-      <Section products={gamingProducts} label="Featured Products # Gaming" />
+      <Section products={gamingProducts} isLoading={isLoading} label="Featured Products # Gaming" />
     </div>
   )
 }

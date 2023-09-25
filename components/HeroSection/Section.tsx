@@ -14,9 +14,10 @@ import ProductCard from "../ProductCard/ProductCard"
 interface SectionProps {
   products: any
   label: String
+  isLoading: boolean
 }
 
-const Section = ({ products, label }: SectionProps) => {
+const Section = ({ products, label, isLoading }: SectionProps) => {
   const [toggle, setToggle] = useState(false)
   return (
     <div className=" py-5">
@@ -25,7 +26,7 @@ const Section = ({ products, label }: SectionProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 ">
           {products?.map((product: any, count: number) =>
             count < 4 ? (
-              <ProductCard key={product?.id} product={product} />
+              <ProductCard key={product?.id} product={product} isLoading={isLoading} />
             ) : null
           )}
         </div>
@@ -43,7 +44,7 @@ const Section = ({ products, label }: SectionProps) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5">
                   {products?.map((product: any, count: number) =>
                     count >= 4 ? (
-                      <ProductCard key={product?.id} product={product} />
+                      <ProductCard key={product?.id} product={product} isLoading={isLoading} />
                     ) : null
                   )}
                 </div>
