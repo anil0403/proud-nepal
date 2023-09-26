@@ -17,7 +17,7 @@ const CopyButton = ({
 }) => {
   const currentURL = window.location.href
   const onCopy = (id: string) => {
-    const url = `${currentURL} products/${id}`
+    const url = `https://www.pnits.com.np/products/${id}`
     console.log(url)
     navigator.clipboard.writeText(url)
     toast.success(message)
