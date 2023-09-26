@@ -15,7 +15,7 @@ const BrandImages = ({ active, id }: BrandImageProps) => {
   const { data: brands } = useBrands()
 
   return (
-    <div className="flex  flex-wrap gap-5 lg:justify-between my-5  py-8 border-b-2">
+    <div className="flex  flex-wrap gap-5 lg:justify-between my-5  py-5 border-b-2">
       {brands?.map((brand: any) => (
         <h1
           onClick={() => router.push(`/brands/${brand?.id}`)}
