@@ -21,7 +21,7 @@ const HeroSection = () => {
 
   return (
     <div className="w-full">
-      <div className=" my-12 py-10 min-w-content flex flex-col gap-10">
+      <div className=" my-12 py-5 min-w-content flex flex-col gap-10">
         <div className="grid grid-cols-1 md:grid-cols-5 items-center  justify-between">
           <TypeWriter />
 
