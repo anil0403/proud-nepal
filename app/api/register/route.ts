@@ -1,38 +1,40 @@
-import { NextRequest, NextResponse } from "next/server";
-import z from "zod";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import { NextRequest, NextResponse } from "next/server"
+import { PrismaClient } from "@prisma/client"
+import bcrypt from "bcrypt"
 
-const prisma = new PrismaClient();
-
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(5)
-});
+const prisma = new PrismaClient()
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const validation = schema.safeParse(body);
+  const { name, username, email, password, phone, address, billingAddress } =
+    await request.json()
 
-  if (!validation.success)
-    return NextResponse.json(validation.error.errors, { status: 400 });
+  console.log(`register data`)
+
+  console.log(name, username, email, password, phone, address, billingAddress)
 
   const user = await prisma.user.findUnique({
     where: {
-      email: body.email,
+      email: email,
     },
-  });
+  })
 
   if (user)
-    return NextResponse.json({ error: "user already exist" }, { status: 400 });
+    return NextResponse.json({ error: "user already exist" }, { status: 400 })
 
-  const hashedPassword = await bcrypt.hash(body.password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10)
   const newUser = await prisma.user.create({
     data: {
-      email: body.email,
+      name: name,
+      username: username,
+      email: email,
+      phone: phone,
       hashedPassword: hashedPassword,
+      address: address,
+      billingAddress: billingAddress,
+      isAdmin: false,
+      isUser: true,
     },
-  });
+  })
 
-  return NextResponse.json({ email: newUser.email }, { status: 201 });
+  return NextResponse.json(newUser, { status: 201 })
 }
