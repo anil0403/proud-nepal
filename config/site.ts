@@ -10,15 +10,23 @@ export const siteConfig = {
       href: "/",
     },
     {
+      title: "Products",
+      href: "/products",
+    },
+    {
+      title: "Brands",
+      href: "/brands",
+    },
+    {
       title: "Browse",
       href: "/browse",
     },
     {
-      title: "About Us",
+      title: "About",
       href: "/about",
     },
     {
-      title: "Contact Us",
+      title: "Contact",
       href: "/contact",
     },
   ],

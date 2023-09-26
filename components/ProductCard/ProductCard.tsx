@@ -106,7 +106,7 @@ const ProductCard = ({ product, isLoading }: ProductCardProps) => {
                 />
               </div>
 
-              <Button onClick={() => router.push(`${product?.id}`)} size="lg">
+              <Button onClick={() => router.push(`/products/${product?.id}`)} size="lg">
                 Checkout
               </Button>
             </div>

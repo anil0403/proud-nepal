@@ -5,12 +5,7 @@ import Image from "next/image"
 
 import useProducts from "@/hooks/useProducts"
 
-import lenevo from "../../public/images/160-1607297_lenovo-logo-svg-hd-png-download.png"
-import dell from "../../public/images/208-2087029_dell-logo-png-transparent-png-download.png"
-import samsung from "../../public/images/256_144_1.avif"
-import asus from "../../public/images/20171002_asus_logo.jpg"
-import acer from "../../public/images/Acer-logo.jpg"
-import apple from "../../public/images/e49986bfb34b23c4354477ce1acb49e0.jpg"
+import BrandImages from "../BrandImages/BrandImages"
 import ImageSlider from "./ImageSlider"
 import ProductCardSection from "./ProductCardSection"
 import TypeWriter from "./Typewriter"
@@ -22,7 +17,7 @@ const texts = [
 ]
 
 const HeroSection = () => {
-  const { data: products , isLoading } = useProducts()
+  const { data: products, isLoading } = useProducts()
 
   return (
     <div className="w-full">
@@ -34,17 +29,9 @@ const HeroSection = () => {
             <ImageSlider />
           </div>
         </div>
-
-        <div className="hidden lg:flex gap-10 flex-wrap justify-between my-5">
-          <Image src={apple} height={100} alt="apple_logo" />
-          <Image src={acer} height={100} alt="apple_logo" />
-          <Image src={dell} height={100} alt="apple_logo" />
-          <Image src={lenevo} height={100} alt="apple_logo" />
-          <Image src={asus} height={100} alt="apple_logo" />
-          <Image src={samsung} height={100} alt="apple_logo" />
-        </div>
+        <BrandImages />
       </div>
-      <ProductCardSection products={products} isLoading={isLoading}/>
+      <ProductCardSection products={products} isLoading={isLoading} />
     </div>
   )
 }
