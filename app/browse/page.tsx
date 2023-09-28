@@ -166,7 +166,7 @@ export default function Browse() {
                         <SelectItem value="">None</SelectItem>
                         {processors?.map((processor: any) => (
                           <SelectItem key={processor?.id} value={processor?.id}>
-                            {processor?.name}
+                            {processor?.name} {processor?.value}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -197,7 +197,7 @@ export default function Browse() {
                         <SelectItem value="">None</SelectItem>
                         {rams?.map((ram: any) => (
                           <SelectItem key={ram?.id} value={ram?.id}>
-                            {ram?.name}
+                          {ram?.value}  {ram?.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
