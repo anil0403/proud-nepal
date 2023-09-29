@@ -12,17 +12,13 @@ import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
 import { Overview } from "@/components/overview"
 
-interface DashboardPageProps {
-  params: {
-    storeId: string
-  }
-}
 
-const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
-  const totalRevenue = await getTotalRevenue(params.storeId)
-  const graphRevenue = await getGraphRevenue(params.storeId)
-  const salesCount = await getSalesCount(params.storeId)
-  const stockCount = await getStockCount(params.storeId)
+
+const DashboardPage = async () => {
+  const totalRevenue = await getTotalRevenue("fa6cde03-6fd3-482f-bf79-c2a14ca3162f")
+  const graphRevenue = await getGraphRevenue("fa6cde03-6fd3-482f-bf79-c2a14ca3162f")
+  const salesCount = await getSalesCount("fa6cde03-6fd3-482f-bf79-c2a14ca3162f")
+  const stockCount = await getStockCount()
 
   return (
     <div className="flex-col">
