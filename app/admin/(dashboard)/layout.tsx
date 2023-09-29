@@ -1,9 +1,5 @@
-import { redirect } from "next/navigation"
-
-import prismadb from "@/lib/prismadb"
 import Navbar from "@/components/navbar"
-
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode

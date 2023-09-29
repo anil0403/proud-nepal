@@ -1,12 +1,9 @@
-import { redirect } from "next/navigation"
 
-import prismadb from "@/lib/prismadb"
-import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 import { MainNavAdmin } from "./main-nav_admin"
 
-const Navbar = async () => {
+const Navbar =  () => {
   //   const { userId } = auth();
 
   //   if (!userId) {
