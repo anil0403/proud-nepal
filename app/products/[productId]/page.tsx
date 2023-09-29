@@ -36,6 +36,8 @@ interface ProductIdProps {
 const ProductId = ({ params: { productId } }: ProductIdProps) => {
   const { data: product } = useProductId(productId)
 
+  console.log(`prdoct = `, product)
+
   const { data: products, isLoading } = useProducts()
   const [alert, setAlert] = useState("Add to Cart")
   const [quantity, setQuantity] = useState(1)
@@ -51,7 +53,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
       <BrandImages />
       <div className="relative flex flex-col justify-center my-10">
         <h2 className="text-center font-bold md:hidden mb-4">
-          {product?.name} {product?.size.name} {product?.size.value}{" "}
+          {product?.name} {product?.size?.name} {product?.size?.value}{" "}
         </h2>
         {/* Product Display */}
         <div className="flex flex-wrap">
@@ -75,7 +77,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                     src={img.url}
                     alt={`Product Thumbnail ${index + 1}`}
                     className=" h-28 w-28  object-contain object-center rounded-lg shadow-md  transition-transform hover:shadow-lg hover:scale-105 cursor-pointer"
-                    onClick={() => setMainImage(img.url)}
+                    onClick={() => setMainImage(img?.url)}
                   />
                 )
               })}
@@ -92,7 +94,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                   <CardTitle>
                     <h2 className="text-2xl font-bold">
                       {product?.category?.name} {product?.name} |{" "}
-                      {product?.size?.name} {product?.size.value} |{" "}
+                      {product?.size?.name} {product?.size?.value} |{" "}
                       {product?.ram?.value} {product?.ram?.name}
                     </h2>
                   </CardTitle>
@@ -102,7 +104,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                         {product?.category?.name} {product?.name}
                       </li>
                       <li>
-                        {product?.size?.name} {product?.size.value}
+                        {product?.size?.name} {product?.size?.value}
                       </li>
                       <li>
                         {product?.ram?.value} {product?.ram?.name}
@@ -235,7 +237,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                 <TableCell>RAM | Memory</TableCell>
                 <TableCell>
                   {" "}
-                  {product?.ram?.value} {product?.ram.name}
+                  {product?.ram?.value} {product?.ram?.name}
                 </TableCell>
               </TableRow>
 
@@ -261,7 +263,7 @@ const ProductId = ({ params: { productId } }: ProductIdProps) => {
                 <TableCell>8</TableCell>
                 <TableCell>Graphics</TableCell>
                 <TableCell>
-                  {product?.color.name} {product?.color?.value}
+                  {product?.color?.name} {product?.color?.value}
                 </TableCell>
               </TableRow>
 

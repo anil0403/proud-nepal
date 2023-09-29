@@ -1,17 +1,25 @@
 import { NextRequest, NextResponse } from "next/server"
-import axios from "axios"
+
+import prismadb from "@/lib/prismadb"
 
 interface ProductIDProps {
   params: { productId: string }
 }
-
 export async function GET(
   request: NextRequest,
   { params: { productId } }: ProductIDProps
 ) {
-  const product = await axios.get(
-    `https://proud-nepal-admin.vercel.app/api/fa6cde03-6fd3-482f-bf79-c2a14ca3162f/products/${productId}`
-  )
-  // console.log(product)
-  return NextResponse.json(product.data)
+  const product = await prismadb.product.findUnique({
+    where: {
+      id: productId,
+    },
+    include: {
+      category: true,
+      size: true,
+      color: true,
+      ram: true,
+      images: true,
+    },
+  })
+  return NextResponse.json(product)
 }

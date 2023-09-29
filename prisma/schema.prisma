@@ -12,6 +12,8 @@ model Store {
   id         String      @id @default(uuid())
   name       String
   userId     String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
   billboards Billboard[] @relation("StoreToBillboard")
   categories Category[]  @relation("StoreToCategory")
   products   Product[]   @relation("StoreToProduct")
@@ -19,67 +21,55 @@ model Store {
   ram        Ram[]       @relation("StoreToRam")
   core       Core[]      @relation("StoreToCore")
   colors     Color[]     @relation("StoreToColor")
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
 }
 
 model Billboard {
   id         String     @id @default(uuid())
   storeId    String
-  store      Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
   label      String
   imageUrl   String
-  categories Category[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  store      Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
+  categories Category[]
 
   @@index([storeId])
 }
 
 model Category {
   id          String    @id @default(uuid())
-  storeId     String // Foreign Key to Store
-  store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
-  billboardId String // Foreign Key to Billboard
-  billboard   Billboard @relation(fields: [billboardId], references: [id])
+  storeId     String
+  billboardId String
   name        String
-  products    Product[] @relation("CategoryToProduct")
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
+  billboard   Billboard @relation(fields: [billboardId], references: [id])
+  products    Product[] @relation("CategoryToProduct")
 
   @@index([storeId])
   @@index([billboardId])
 }
 
 model Cart {
-  id       Int       @id @default(autoincrement())
-  quantity Int?
-  userId   String    @unique
-  user     User      @relation(fields: [userId], references: [id])
-  products Product[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  userId    String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  quantity  Int?
+  user      User      @relation(fields: [userId], references: [id])
+  products  Product[]
 }
 
 model Product {
   id            String   @id @default(uuid())
-  storeId       String // Foreign Key to Store
-  store         Store    @relation("StoreToProduct", fields: [storeId], references: [id])
-  categoryId    String // Foreign Key to Category
-  category      Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  storeId       String
+  categoryId    String
   name          String
   price         Float
   isFeatured    Boolean? @default(false)
-  isGaming      Boolean? @default(false)
   isArchived    Boolean? @default(false)
-  isStudent     Boolean? @default(false)
-  isOffice      Boolean? @default(false)
-  fbLink        String?
-  tiktokLink    String?
-  instaLink     String?
-  sizeId        String // Foreign Key to Size
-  size          Size     @relation(fields: [sizeId], references: [id])
+  sizeId        String
   stock         Int
   memorySlot    String
   storage       String
@@ -92,96 +82,117 @@ model Product {
   fingerPrint   String
   powerAdapter  String
   battery       String
-  colorId       String // Foreign Key to Color
-  color         Color    @relation(fields: [colorId], references: [id])
-  ramId         String // Foreign Key to Ram
-  ram           Ram      @relation(fields: [ramId], references: [id])
-  images        Image[] // Relation to Image model
-  userId        String? // Foreign Key to User
-  user          User?    @relation(fields: [userId], references: [id])
-  cartId        Int? // Foreign Key to Cart
-  cart          Cart?    @relation(fields: [cartId], references: [id])
-  coreId        String?
-  core          Core?    @relation(fields: [coreId], references: [id])
-  warrantyNew   String?
+  colorId       String
+  ramId         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  userId        String?
+  isOffice      Boolean? @default(false)
+  isStudent     Boolean? @default(false)
+  isGaming      Boolean? @default(false)
+  cartId        Int?
+  fbLink        String?
+  instaLink     String?
+  tiktokLink    String?
+  discount      Float?
+  freeItems     String?
+  newPrice      Float?
   warranty      Float?
+  coreId        String?
+  warrantyNew   String?
+  i3            Boolean?
+  i5            Boolean?
+  i7            Boolean?
+  r3            Boolean?
+  r5            Boolean?
+  r7            Boolean?
+  r9            Boolean?
+  ram16gb       Boolean?
+  ram2gb        Boolean?
+  ram32gb       Boolean?
+  ram4gb        Boolean?
+  ram64gb       Boolean?
+  ram6gb        Boolean?
+  ram8gb        Boolean?
+  store         Store    @relation("StoreToProduct", fields: [storeId], references: [id])
+  category      Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  size          Size     @relation(fields: [sizeId], references: [id])
+  color         Color    @relation(fields: [colorId], references: [id])
+  ram           Ram      @relation(fields: [ramId], references: [id])
+  images        Image[]
+  user          User?    @relation(fields: [userId], references: [id])
+  cart          Cart?    @relation(fields: [cartId], references: [id])
+  core          Core?    @relation(fields: [coreId], references: [id])
 
-  freeItems String?
-  discount  Float?
-  newPrice  Float?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId]) // Index for optimizing queries using userId
+  @@index([userId])
   @@index([storeId])
   @@index([categoryId])
   @@index([sizeId])
   @@index([colorId])
   @@index([ramId])
-  @@index([cartId]) // Index for cartId for better performance.
-  @@index([coreId]) // Index for cartId for better performance.
+  @@index([cartId])
+  @@index([coreId])
 }
 
 model Size {
   id        String    @id @default(uuid())
-  storeId   String // Foreign Key to Store
-  store     Store     @relation("StoreToSize", fields: [storeId], references: [id])
+  storeId   String
   name      String
   value     String
-  products  Product[] // Relation to Product model
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToSize", fields: [storeId], references: [id])
+  products  Product[]
 
   @@index([storeId])
 }
 
 model Core {
   id        String    @id @default(uuid())
-  storeId   String // Foreign Key to Store
-  store     Store     @relation("StoreToCore", fields: [storeId], references: [id])
+  storeId   String
   core      String
   thread    String
-  products  Product[] // Relation to Product model
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToCore", fields: [storeId], references: [id])
+  products  Product[]
 
   @@index([storeId])
 }
 
 model Ram {
   id        String    @id @default(uuid())
-  storeId   String // Foreign Key to Store
-  store     Store     @relation("StoreToRam", fields: [storeId], references: [id])
+  storeId   String
   name      String
   value     String
-  products  Product[] // Relation to Product model
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToRam", fields: [storeId], references: [id])
+  products  Product[]
 
   @@index([storeId])
 }
 
 model Color {
   id        String    @id @default(uuid())
-  storeId   String // Foreign Key to Store
-  store     Store     @relation("StoreToColor", fields: [storeId], references: [id])
+  storeId   String
   name      String
   value     String
-  products  Product[] // Relation to Product model
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToColor", fields: [storeId], references: [id])
+  products  Product[]
 
   @@index([storeId])
 }
 
 model Image {
   id        String   @id @default(uuid())
-  productId String // Foreign Key to Product
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  url       String // URL of the image
+  productId String
+  url       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([productId])
 }
@@ -190,29 +201,27 @@ model User {
   id             String    @id @default(uuid())
   name           String?
   email          String?   @unique
-  username       String?
-  hashedPassword String?
-  isAdmin        Boolean?
-  isUser         Boolean?
   address        String?
   billingAddress String?
   phone          String?
-  emailVerified  DateTime? @map(name: "email_verified")
   image          String?
+  hashedPassword String?
+  username       String?
+  createdAt      DateTime  @default(now()) @map("created_at")
+  emailVerified  DateTime? @map("email_verified")
+  updatedAt      DateTime  @default(now()) @map("updated_at")
+  isAdmin        Boolean?
+  isUser         Boolean?
   products       Product[]
   cart           Cart?
+  accounts       Account[]
+  sessions       Session[]
 
-  createdAt DateTime  @default(now()) @map(name: "created_at")
-  updatedAt DateTime  @default(now()) @map(name: "updated_at")
-  accounts  Account[]
-  sessions  Session[]
-
-  @@index([email]) // Index on email for better performance.
+  @@index([email])
 }
 
 model Account {
-  id String @id @default(uuid())
-
+  id                String  @id @default(uuid())
   userId            String
   type              String
   provider          String
@@ -224,16 +233,14 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
 }
 
 model Session {
-  id String @id @default(uuid())
-
+  id           String   @id @default(uuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
